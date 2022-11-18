@@ -23,41 +23,39 @@ export const ScoreTable: React.FC<ScoreTableProps> = ({ entries, onDelete, onEdi
             }, 0);
 
     return (
-        <TableContainer style={{ marginLeft: 20 }}>
-            <Table sx={{ maxWidth: '680px', minWidth: '600px', border: 1.5, borderRadius: '25%', borderColor: 'grey' }}>
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>#</StyledTableCell>
-                        <StyledTableCell align="right">Contract</StyledTableCell>
-                        <StyledTableCell align="right">By</StyledTableCell>
-                        <StyledTableCell align="right">Score</StyledTableCell>
-                        <StyledTableCell align="right">Imps</StyledTableCell>
-                        <StyledTableCell align="right">	Imps &Sigma;</StyledTableCell>
-                        <StyledTableCell align="right">Score &Sigma;</StyledTableCell>
-                        <StyledTableCell align="right">Points N-S</StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
+        <Table sx={{ maxWidth: '680px', minWidth: '600px', border: 1.5, borderRadius: '25%', borderColor: 'grey' }}>
+            <TableHead>
+                <TableRow>
+                    <StyledTableCell>#</StyledTableCell>
+                    <StyledTableCell align="right">Contract</StyledTableCell>
+                    <StyledTableCell align="right">By</StyledTableCell>
+                    <StyledTableCell align="right">Score</StyledTableCell>
+                    <StyledTableCell align="right">Imps</StyledTableCell>
+                    <StyledTableCell align="right">	Imps &Sigma;</StyledTableCell>
+                    <StyledTableCell align="right">Score &Sigma;</StyledTableCell>
+                    <StyledTableCell align="right">Points N-S</StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
 
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {entries.map((entry) => (
-                        <EntryRow entry={entry} onDeleteClick={onDelete} calculateImpsTotalUpTo={calculateImpsTotalUpTo} calculateScoreTotalUpTo={calculateScoreTotalUpTo} />))}
-                    <StyledTableRow
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <StyledTableCell component="th" scope="row">
-                        </StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                    </StyledTableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {entries.map((entry) => (
+                    <EntryRow entry={entry} onDeleteClick={onDelete} calculateImpsTotalUpTo={calculateImpsTotalUpTo} calculateScoreTotalUpTo={calculateScoreTotalUpTo} />))}
+                <StyledTableRow
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                    <StyledTableCell component="th" scope="row">
+                    </StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
+                </StyledTableRow>
+            </TableBody>
+        </Table>
     );
 }
