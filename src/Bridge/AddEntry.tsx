@@ -91,7 +91,7 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ entry, addEntryFunction }) =>
 
     return (
         <Container sx={tableContainerSx}>
-            <Card sx={{ bgcolor: 'rgb(236, 243, 245)', padding: '10px', m: '20px', minWidth: '600px', maxWidth: '680px', position: 'center', border: 'thin' }}>
+            <Card sx={{ bgcolor: 'rgb(236, 243, 245)', padding: '10px', m: '20px', minWidth: 'auto', maxWidth: 'auto', position: 'center', border: 'thin' }}>
                 <CardHeader
                     sx={{ borderBottom: 'thick', borderBottomColor: 'grey' }}
                     avatar={
@@ -103,52 +103,54 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ entry, addEntryFunction }) =>
                 />
 
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
-                    <FormControl>
+                    <div>
+                        <FormControl>
+                            <TextField
+                                sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
+                                error={!!errors['boardNumber']}
+                                type="number" defaultValue={entry.boardNumber || ''}
+                                {...register('boardNumber')}
+                                id="contract-number-input"
+                                label="Board#"
+                                variant="filled"
+                                helperText={!!errors['boardNumber'] ? errors['boardNumber'].message as string : ''}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </FormControl>
+                        <FormControl>
+                            <TextField
+                                sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
+                                error={!!errors['contractLevel']}
+                                type="number" defaultValue={entry.contractLevel || ''}
+                                {...register('contractLevel', { onChange: (e) => handleChangelevel(e) })}
+                                label="Level"
+                                variant="filled"
+                                helperText={!!errors['contractLevel'] ? errors['contractLevel'].message as string : ''}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                id="contract-contractLevel-input" />
+                        </FormControl>
                         <TextField
-                            sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
-                            error={!!errors['boardNumber']}
-                            type="number" defaultValue={entry.boardNumber || ''}
-                            {...register('boardNumber')}
-                            id="contract-number-input"
-                            label="Board#"
+                            sx={{ m: 1, minWidth: '20ch', maxWidth: '22ch' }}
+                            id="filled-select-currency"
+                            select
+                            error={!!errors['contractType']}
+                            label="Contract Type"
+                            value={type || ''}
+                            {...register('contractType', { onChange: (e) => handleChangeContractType(e) })}
+                            helperText={!!errors['contractType'] ? errors['contractType'].message as string : ''}
                             variant="filled"
-                            helperText={!!errors['boardNumber'] ? errors['boardNumber'].message as string : ''}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                    </FormControl>
-                    <FormControl>
-                        <TextField
-                            sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
-                            error={!!errors['contractLevel']}
-                            type="number" defaultValue={entry.contractLevel || ''}
-                            {...register('contractLevel', { onChange: (e) => handleChangelevel(e) })}
-                            label="Level"
-                            variant="filled"
-                            helperText={!!errors['contractLevel'] ? errors['contractLevel'].message as string : ''}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            id="contract-contractLevel-input" />
-                    </FormControl>
-                    <TextField
-                        sx={{ m: 1, minWidth: '20ch', maxWidth: '22ch' }}
-                        id="filled-select-currency"
-                        select
-                        error={!!errors['contractType']}
-                        label="Contract Type"
-                        value={type || ''}
-                        {...register('contractType', { onChange: (e) => handleChangeContractType(e) })}
-                        helperText={!!errors['contractType'] ? errors['contractType'].message as string : ''}
-                        variant="filled"
-                    >
-                        <MenuItem value={'Clubs'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Clubs')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Clubs)</i> </span></MenuItem>
-                        <MenuItem value={'Diamonds'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Diamonds')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Diamonds)</i> </span></MenuItem>
-                        <MenuItem value={'Hearts'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Hearts')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Hearts)</i> </span></MenuItem>
-                        <MenuItem value={'Spades'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Spades')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Spades)</i> </span></MenuItem>
-                        <MenuItem value={'NoTrump'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{'NT'}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(NoTrump)</i> </span></MenuItem>
-                    </TextField>
+                        >
+                            <MenuItem value={'Clubs'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Clubs')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Clubs)</i> </span></MenuItem>
+                            <MenuItem value={'Diamonds'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Diamonds')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Diamonds)</i> </span></MenuItem>
+                            <MenuItem value={'Hearts'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Hearts')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Hearts)</i> </span></MenuItem>
+                            <MenuItem value={'Spades'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Spades')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Spades)</i> </span></MenuItem>
+                            <MenuItem value={'NoTrump'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{'NT'}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(NoTrump)</i> </span></MenuItem>
+                        </TextField>
+                    </div>
                     <TextField
                         sx={{ m: 1, minWidth: '10ch', maxWidth: '15ch' }}
                         id="filled-select"

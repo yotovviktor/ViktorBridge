@@ -37,10 +37,10 @@ function Bridge() {
     }
 
     return (
-        <Container>
+        <>
             <ScoreTable entries={entries as Entry[]} onDelete={deleteEntry} onEdit={editEntry} />
             <AddEntry entry={currentEntry} addEntryFunction={addEntry} />
-        </Container>
+        </>
     );
 }
 
