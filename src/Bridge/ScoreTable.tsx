@@ -23,8 +23,8 @@ export const ScoreTable: React.FC<ScoreTableProps> = ({ entries, onDelete, onEdi
             }, 0);
 
     return (
-        <TableContainer style={{ margin: 20 }}>
-            <Table sx={{ minWidth: 100, maxWidth: 700, border: 1.5, borderRadius: '25%', borderColor: 'grey' }}>
+        <TableContainer style={{ marginLeft: 20 }}>
+            <Table sx={{ maxWidth: '680px', minWidth: '600px', border: 1.5, borderRadius: '25%', borderColor: 'grey' }}>
                 <TableHead>
                     <TableRow>
                         <StyledTableCell>#</StyledTableCell>

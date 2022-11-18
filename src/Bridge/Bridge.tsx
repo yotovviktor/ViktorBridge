@@ -4,8 +4,8 @@ import AddEntry from './AddEntry';
 import { calculateImps } from './CalculateImpsScore';
 import { calculateScore } from './CalculateScore';
 import { ScoreTable } from './ScoreTable'
-import  './Bridge.css'
 import Grid from '@mui/material/Grid'; // Grid version 1
+import { Container } from '@mui/system';
 
 
 function Bridge() {
@@ -37,14 +37,10 @@ function Bridge() {
     }
 
     return (
-        <Grid container spacing={1} columns={16}>
-            <Grid item xs={10}>
-                <ScoreTable entries={entries as Entry[]} onDelete={deleteEntry} onEdit={editEntry} />
-            </Grid>
-            <Grid item xs={5} sx={{ marginRight: '5px', marginTop:"20px" }}>
-                <AddEntry entry={currentEntry} addEntryFunction={addEntry} />
-            </Grid>
-        </Grid>
+        <Container>
+            <ScoreTable entries={entries as Entry[]} onDelete={deleteEntry} onEdit={editEntry} />
+            <AddEntry entry={currentEntry} addEntryFunction={addEntry} />
+        </Container>
     );
 }
 
