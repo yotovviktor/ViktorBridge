@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/ViktorBridge/static/css/main.748a5547.css",
-    "main.js": "/ViktorBridge/static/js/main.708e4d25.js",
+    "main.css": "/ViktorBridge/static/css/main.03ed34f2.css",
+    "main.js": "/ViktorBridge/static/js/main.2eaed5e7.js",
     "static/js/787.4cb63391.chunk.js": "/ViktorBridge/static/js/787.4cb63391.chunk.js",
     "index.html": "/ViktorBridge/index.html",
-    "main.748a5547.css.map": "/ViktorBridge/static/css/main.748a5547.css.map",
-    "main.708e4d25.js.map": "/ViktorBridge/static/js/main.708e4d25.js.map",
+    "main.03ed34f2.css.map": "/ViktorBridge/static/css/main.03ed34f2.css.map",
+    "main.2eaed5e7.js.map": "/ViktorBridge/static/js/main.2eaed5e7.js.map",
     "787.4cb63391.chunk.js.map": "/ViktorBridge/static/js/787.4cb63391.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.748a5547.css",
-    "static/js/main.708e4d25.js"
+    "static/css/main.03ed34f2.css",
+    "static/js/main.2eaed5e7.js"
   ]
 }
