@@ -1,4 +1,4 @@
-import { By, ContractType, Vulnerability } from "../model";
+import { By, ContractType, Vulnerability } from "../../model";
 
 export function getVulnerability(boardNumber: number): Vulnerability {
     const remainder = boardNumber % 16;

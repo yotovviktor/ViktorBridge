@@ -1,4 +1,4 @@
-import { calculateScore, getBonus, getDownScore, getOverTricksBonus, getPureScore, getScoreModifier, getVulnerability } from '../Bridge/CalculateScore';
+import { calculateScore, getBonus, getDownScore, getOverTricksBonus, getPureScore, getScoreModifier, getVulnerability } from '../Bridge/Calculation/CalculateScore';
 import { Vulnerability } from '../model';
 
 describe("Get Vulnerability", () => {

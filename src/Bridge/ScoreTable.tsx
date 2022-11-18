@@ -6,6 +6,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { ScoreTableProps } from '../model';
 import EntryRow, { StyledTableCell, StyledTableRow } from './EntryRow';
+import { SxProps } from '@mui/material';
+
+const tableContainerSx: SxProps = {
+    border: "1px solid rgba(128,128,128,0.4)",
+    width: "max-content",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 4,
+    borderRadius: 2,
+    maxHeight: 500
+};
 
 export const ScoreTable: React.FC<ScoreTableProps> = ({ entries, onDelete, onEdit }) => {
     const calculateImpsTotalUpTo = (entryId: number): number =>
@@ -23,39 +34,48 @@ export const ScoreTable: React.FC<ScoreTableProps> = ({ entries, onDelete, onEdi
             }, 0);
 
     return (
-        <Table sx={{ maxWidth: '680px', minWidth: '600px', border: 1.5, borderRadius: '25%', borderColor: 'grey' }}>
-            <TableHead>
-                <TableRow>
-                    <StyledTableCell>#</StyledTableCell>
-                    <StyledTableCell align="right">Contract</StyledTableCell>
-                    <StyledTableCell align="right">By</StyledTableCell>
-                    <StyledTableCell align="right">Score</StyledTableCell>
-                    <StyledTableCell align="right">Imps</StyledTableCell>
-                    <StyledTableCell align="right">	Imps &Sigma;</StyledTableCell>
-                    <StyledTableCell align="right">Score &Sigma;</StyledTableCell>
-                    <StyledTableCell align="right">Points N-S</StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
+        <TableContainer sx={tableContainerSx}>
+            <Table
+                stickyHeader={true}
+                sx={{ maxWidth: '680px', minWidth: '600px'}}>
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell>#</StyledTableCell>
+                        <StyledTableCell align="right">Contract</StyledTableCell>
+                        <StyledTableCell align="right">By</StyledTableCell>
+                        <StyledTableCell align="right">Score</StyledTableCell>
+                        <StyledTableCell align="right">Imps</StyledTableCell>
+                        <StyledTableCell align="right">	Imps &Sigma;</StyledTableCell>
+                        <StyledTableCell align="right">Score &Sigma;</StyledTableCell>
+                        <StyledTableCell align="right">Points N-S</StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
 
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {entries.map((entry) => (
-                    <EntryRow entry={entry} onDeleteClick={onDelete} calculateImpsTotalUpTo={calculateImpsTotalUpTo} calculateScoreTotalUpTo={calculateScoreTotalUpTo} />))}
-                <StyledTableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                    <StyledTableCell component="th" scope="row">
-                    </StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
-                    <StyledTableCell align="right"></StyledTableCell>
-                </StyledTableRow>
-            </TableBody>
-        </Table>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {entries.map((entry) => (
+                        <EntryRow
+                            key={entry.id}
+                            entry={entry}
+                            onDeleteClick={onDelete}
+                            calculateImpsTotalUpTo={calculateImpsTotalUpTo}
+                            calculateScoreTotalUpTo={calculateScoreTotalUpTo} />))}
+                    <StyledTableRow
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                        <StyledTableCell component="th" scope="row">
+                        </StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell>
+                    </StyledTableRow>
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 }

@@ -1,4 +1,4 @@
-import { By, ScoreToImps } from "../model";
+import { By, ScoreToImps } from "../../model";
 import { getVulnerability, isVulnerable } from "./CalculateScore";
 
 export function calculateImps(score: number, points: number, boardNumber: number, by: By) {
@@ -53,6 +53,7 @@ export function getImps(dif: number) {
 
 export function getImpsArray(): ScoreToImps[] {
     const result = [] as ScoreToImps[];
+    result.push({ lower: 0, upper: 19, imps: 0 })
     result.push({ lower: 20, upper: 40, imps: 1 });
     result.push({ lower: 50, upper: 80, imps: 2 });
     result.push({ lower: 90, upper: 120, imps: 3 });

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Entry } from '../model';
 import AddEntry from './AddEntry';
-import { calculateImps } from './CalculateImpsScore';
-import { calculateScore } from './CalculateScore';
+import { calculateImps } from './Calculation/CalculateImpsScore';
+import { calculateScore } from './Calculation/CalculateScore';
 import { ScoreTable } from './ScoreTable'
 import Grid from '@mui/material/Grid'; // Grid version 1
 import { Container } from '@mui/system';

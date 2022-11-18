@@ -4,10 +4,12 @@ import TableRow from '@mui/material/TableRow';
 import { Button, styled } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ContractType, Entry, ScoreTableProps, ScoreTableRowProps } from '../model';
+import { purpuleColor } from '../styles';
+import { getSymbol } from './Helpers/utils';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: purpuleColor,
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -26,18 +28,6 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const EntryRow: React.FC<ScoreTableRowProps> = ({ entry, calculateImpsTotalUpTo, calculateScoreTotalUpTo, onDeleteClick }) => {
-
-  const getSymbol = (type: ContractType) => {
-    switch (type) {
-      case 'Clubs': return (<span style={{ color: 'green' }}>&clubs;</span>)
-      case 'Diamonds': return (<span style={{ color: 'orange' }}>&diams;</span>)
-      case 'Hearts': return (<span style={{ color: 'red' }}>&hearts;</span>)
-      case 'Spades': return (<span style={{ color: 'blue' }}>&spades;</span>)
-      case 'NoTrump': return (<span>NT</span>);
-      default: return ''
-    }
-  }
-
   return (
     <StyledTableRow
       key={entry.id}

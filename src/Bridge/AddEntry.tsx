@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, FormGroup, MenuItem, SelectChangeEvent, TextField } from "@mui/material";
+import { Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, FormGroup, MenuItem, SelectChangeEvent, SxProps, TextField } from "@mui/material";
 import { AddOrEditEntryProps, By, ContractType, Entry } from "../model";
+import { Container } from "@mui/system";
+import { purpuleColor, warningColor } from "../styles";
+import { getSymbol } from "./Helpers/utils";
 
 export const validationSchema = yup.object().shape({
     boardNumber: yup.number().integer().required()
@@ -77,157 +80,169 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ entry, addEntryFunction }) =>
         setIsRedoubled(prevState => false);
     }
 
+    const tableContainerSx: SxProps = {
+        width: "max-content",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginTop: 4,
+        borderRadius: 2,
+        maxHeight: 500
+    };
+
     return (
-        <Card sx={{ bgcolor: 'rgb(236, 243, 245)', padding: '10px', m: '20px', minWidth: '600px', maxWidth: '680px', position: 'center', border: 'thin' }}>
-            <CardHeader
-                sx={{ borderBottom: 'thick', borderBottomColor: 'grey' }}
-                avatar={
-                    <Avatar sx={{ bgcolor: 'blue' }} aria-label="recipe">
-                        <AddIcon />
-                    </Avatar>
-                }
-                title="Add Entry"
-            />
-            <form onSubmit={handleSubmit(onSubmitHandler)}>
-
-                <FormControl>
-                    <TextField
-                        sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
-                        error={!!errors['boardNumber']}
-                        type="number" defaultValue={entry.boardNumber || ''}
-                        {...register('boardNumber')}
-                        id="contract-number-input"
-                        label="Board#"
-                        variant="filled"
-                        helperText={!!errors['boardNumber'] ? errors['boardNumber'].message as string : ''}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </FormControl>
-                <FormControl>
-                    <TextField
-                        sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
-                        error={!!errors['contractLevel']}
-                        type="number" defaultValue={entry.contractLevel || ''}
-                        {...register('contractLevel', { onChange: (e) => handleChangelevel(e) })}
-                        label="Level"
-                        variant="filled"
-                        helperText={!!errors['contractLevel'] ? errors['contractLevel'].message as string : ''}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        id="contract-contractLevel-input" />
-                </FormControl>
-                <TextField
-                    sx={{ m: 1, minWidth: '20ch', maxWidth: '22ch' }}
-                    id="filled-select-currency"
-                    select
-                    error={!!errors['contractType']}
-                    label="Contract Type"
-                    value={type || ''}
-                    {...register('contractType', { onChange: (e) => handleChangeContractType(e) })}
-                    helperText={!!errors['contractType'] ? errors['contractType'].message as string : ''}
-                    variant="filled"
-                >
-                    <MenuItem value={'Clubs'}>Clubs</MenuItem>
-                    <MenuItem value={'Diamonds'}>Diamonds</MenuItem>
-                    <MenuItem value={'Hearts'}>Hearts</MenuItem>
-                    <MenuItem value={'Spades'}>Spades</MenuItem>
-                    <MenuItem value={'NoTrump'}>NoTrump</MenuItem>
-                </TextField>
-                <FormControlLabel control={
-                    <Checkbox
-                        sx={{ m: 1 }}
-                        {...register('isDoubled', { onChange: (e) => handleChangeisDoubled(e) })}
-                        checked={isDoubled}
-                        defaultValue={String(isRedoubled)}
-                        disabled={isRedoubled}
-                        value={Boolean(isRedoubled)} />}
-                    label="X" />
-                <FormControlLabel control={
-                    <Checkbox  {...register('isRedoubled', { onChange: (e) => handleChangeisRedoubled(e) })}
-                        sx={{ m: 1 }}
-                        disabled={Boolean(isDoubled)}
-                        checked={Boolean(isRedoubled)}
-                        value={Boolean(isRedoubled)} />
-                } label="XX" />
-
-                <TextField
-                    sx={{ m: 1, minWidth: '10ch', maxWidth: '15ch' }}
-                    id="filled-select"
-                    select
-                    error={!!errors['by']}
-                    label="By"
-                    value={by}
-                    {...register('by', { onChange: (e) => handleChangeBy(e) })}
-                    helperText={!!errors['by'] ? errors['by'].message as string : ''}
-                    variant="filled"
-                >
-                    <MenuItem value={'N-S'}>N-S</MenuItem>
-                    <MenuItem value={'E-W'}>E-W</MenuItem>
-                </TextField>
-                <TextField
-                    sx={{ m: 1, minWidth: '10ch', maxWidth: '12ch' }}
-                    id="ticks-made-select-input"
-                    select
-                    error={!!errors['tricksMade']}
-                    label="Tricks"
-                    value={tricksMade || ''}
-                    {...register('tricksMade', { onChange: (e) => handleChangeTricksMade(e) })}
-                    helperText={!!errors['tricksMade'] ? errors['tricksMade'].message as string : ''}
-                    variant="filled"
-                >
-                    {
-                        Array.from(Array(14).keys()).map(el => {
-                            return (
-                                <MenuItem key={el}
-                                    autoFocus={el === (level + 6)}
-                                    value={el}>
-                                    {
-                                        (el === level + 6)
-                                            ? '='
-                                            : (el < (level + 6)) ? 0 - (level + 6 - el) : el - (level + 6)
-                                    }
-                                </MenuItem>)
-                        })
+        <Container sx={tableContainerSx}>
+            <Card sx={{ bgcolor: 'rgb(236, 243, 245)', padding: '10px', m: '20px', minWidth: '600px', maxWidth: '680px', position: 'center', border: 'thin' }}>
+                <CardHeader
+                    sx={{ borderBottom: 'thick', borderBottomColor: 'grey' }}
+                    avatar={
+                        <Avatar sx={{ bgcolor: purpuleColor }} aria-label="recipe">
+                            <AddIcon />
+                        </Avatar>
                     }
-                </TextField>
-                <FormControl>
-                    <TextField
-                        sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
-                        error={!!errors['points']}
-                        type="number" defaultValue={entry.boardNumber || ''}
-                        {...register('points')}
-                        id="points-input"
-                        label="Points"
-                        variant="filled"
-                        helperText={!!errors['points'] ? errors['points'].message as string : ''}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </FormControl>
-                <CardActions>
-                    <Button
-                        type='submit'
-                        size="large"
-                        color="primary"
-                    >
-                        Add
-                    </Button>
+                    title="Add Entry"
+                />
 
-                    <Button
-                        type='button'
-                        size="large"
-                        color="warning"
-                        onClick={() => customReset()}
+                <form onSubmit={handleSubmit(onSubmitHandler)}>
+                    <FormControl>
+                        <TextField
+                            sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
+                            error={!!errors['boardNumber']}
+                            type="number" defaultValue={entry.boardNumber || ''}
+                            {...register('boardNumber')}
+                            id="contract-number-input"
+                            label="Board#"
+                            variant="filled"
+                            helperText={!!errors['boardNumber'] ? errors['boardNumber'].message as string : ''}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                    </FormControl>
+                    <FormControl>
+                        <TextField
+                            sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
+                            error={!!errors['contractLevel']}
+                            type="number" defaultValue={entry.contractLevel || ''}
+                            {...register('contractLevel', { onChange: (e) => handleChangelevel(e) })}
+                            label="Level"
+                            variant="filled"
+                            helperText={!!errors['contractLevel'] ? errors['contractLevel'].message as string : ''}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            id="contract-contractLevel-input" />
+                    </FormControl>
+                    <TextField
+                        sx={{ m: 1, minWidth: '20ch', maxWidth: '22ch' }}
+                        id="filled-select-currency"
+                        select
+                        error={!!errors['contractType']}
+                        label="Contract Type"
+                        value={type || ''}
+                        {...register('contractType', { onChange: (e) => handleChangeContractType(e) })}
+                        helperText={!!errors['contractType'] ? errors['contractType'].message as string : ''}
+                        variant="filled"
                     >
-                        Reset
-                    </Button>
-                </CardActions>
-            </form >
-        </Card>
+                        <MenuItem value={'Clubs'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Clubs')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Clubs)</i> </span></MenuItem>
+                        <MenuItem value={'Diamonds'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Diamonds')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Diamonds)</i> </span></MenuItem>
+                        <MenuItem value={'Hearts'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Hearts')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Hearts)</i> </span></MenuItem>
+                        <MenuItem value={'Spades'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{getSymbol('Spades')}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(Spades)</i> </span></MenuItem>
+                        <MenuItem value={'NoTrump'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>{'NT'}<i style={{ opacity: '0.5', marginLeft: '5px' }}>(NoTrump)</i> </span></MenuItem>
+                    </TextField>
+                    <TextField
+                        sx={{ m: 1, minWidth: '10ch', maxWidth: '15ch' }}
+                        id="filled-select"
+                        select
+                        error={!!errors['by']}
+                        label="By"
+                        value={by}
+                        {...register('by', { onChange: (e) => handleChangeBy(e) })}
+                        helperText={!!errors['by'] ? errors['by'].message as string : ''}
+                        variant="filled"
+                    >
+                        <MenuItem value={'N-S'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>N-S</span></MenuItem>
+                        <MenuItem value={'E-W'}><span style={{ marginLeft: 'auto', marginRight: 'auto' }}>E-W </span></MenuItem>
+                    </TextField>
+                    <TextField
+                        sx={{ m: 1, minWidth: '10ch', maxWidth: '12ch' }}
+                        id="ticks-made-select-input"
+                        select
+                        error={!!errors['tricksMade']}
+                        label="Tricks"
+                        value={tricksMade || ''}
+                        {...register('tricksMade', { onChange: (e) => handleChangeTricksMade(e) })}
+                        helperText={!!errors['tricksMade'] ? errors['tricksMade'].message as string : ''}
+                        variant="filled"
+                    >
+                        {
+                            Array.from(Array(14).keys()).map(el => {
+                                return (
+                                    <MenuItem key={el}
+                                        autoFocus={el === (level + 6)}
+                                        value={el}>
+                                        <span style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                                            {
+                                                (el === level + 6)
+                                                    ? '='
+                                                    : (el < (level + 6)) ? 0 - (level + 6 - el) : '+' + (el - (level + 6))
+                                            }
+                                        </span>
+                                    </MenuItem>)
+                            })
+                        }
+                    </TextField>
+                    <FormControl>
+                        <TextField
+                            sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
+                            error={!!errors['points']}
+                            type="number" defaultValue={entry.boardNumber || ''}
+                            {...register('points')}
+                            id="points-input"
+                            label="Points"
+                            variant="filled"
+                            helperText={!!errors['points'] ? errors['points'].message as string : ''}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                    </FormControl>
+                    <FormControlLabel control={
+                        <Checkbox
+                            sx={{ m: 1 }}
+                            {...register('isDoubled', { onChange: (e) => handleChangeisDoubled(e) })}
+                            checked={isDoubled}
+                            defaultValue={String(isRedoubled)}
+                            disabled={isRedoubled}
+                            value={Boolean(isRedoubled)} />}
+                        label="X" />
+                    <FormControlLabel control={
+                        <Checkbox  {...register('isRedoubled', { onChange: (e) => handleChangeisRedoubled(e) })}
+                            sx={{ m: 1 }}
+                            disabled={Boolean(isDoubled)}
+                            checked={Boolean(isRedoubled)}
+                            value={Boolean(isRedoubled)} />
+                    } label="XX" />
+                    <CardActions>
+                        <Button
+                            type='submit'
+                            size="large"
+                            sx={{ color: purpuleColor }}
+                        >
+                            Add
+                        </Button>
+
+                        <Button
+                            type='button'
+                            size="large"
+                            sx={{ color: warningColor }}
+                            onClick={() => customReset()}
+                        >
+                            Reset
+                        </Button>
+                    </CardActions>
+                </form >
+            </Card>
+        </Container>
     );
 }
 

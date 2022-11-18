@@ -1,4 +1,4 @@
-import { calculateImps, getImps, getObligation } from '../Bridge/CalculateImpsScore';
+import { calculateImps, getImps, getObligation } from '../Bridge/Calculation/CalculateImpsScore';
 
 describe("Get Obligation", () => {
     describe("when trying to get obligation", () => {
