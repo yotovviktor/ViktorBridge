@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/ViktorBridge/static/css/main.03ed34f2.css",
-    "main.js": "/ViktorBridge/static/js/main.215fd6ca.js",
+    "main.js": "/ViktorBridge/static/js/main.c854b08e.js",
     "static/js/787.4cb63391.chunk.js": "/ViktorBridge/static/js/787.4cb63391.chunk.js",
     "static/media/logo.png": "/ViktorBridge/static/media/logo.b226862fd0cdda703666.png",
     "index.html": "/ViktorBridge/index.html",
     "main.03ed34f2.css.map": "/ViktorBridge/static/css/main.03ed34f2.css.map",
-    "main.215fd6ca.js.map": "/ViktorBridge/static/js/main.215fd6ca.js.map",
+    "main.c854b08e.js.map": "/ViktorBridge/static/js/main.c854b08e.js.map",
     "787.4cb63391.chunk.js.map": "/ViktorBridge/static/js/787.4cb63391.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.03ed34f2.css",
-    "static/js/main.215fd6ca.js"
+    "static/js/main.c854b08e.js"
   ]
 }
