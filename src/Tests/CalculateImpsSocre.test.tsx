@@ -85,14 +85,34 @@ describe("CalculateImps", () => {
         });
 
         it("should get it right when +200  with 16 pts", () => {
-            const actual = calculateImps(200, 16, 3, 'E-W');
-            const expected = 10
+            const actual = calculateImps(-200, 24, 3, 'E-W');
+            const expected = -10
             expect(actual).toEqual(expected);
         });
 
         it("should get it right when +200  with 15 pts", () => {
-            const actual = calculateImps(200, 15, 3, 'E-W');
-            const expected = 12
+            const actual = calculateImps(-200, 25, 3, 'E-W');
+            const expected = -12
+            expect(actual).toEqual(expected);
+        });
+        it("should get it right when +100 with 26 pts", () => {
+            const actual = calculateImps(-100, 14, 2, 'E-W');
+            const expected = 9
+            expect(actual).toEqual(expected);
+        });
+        it("should get it right when E-W have 24 pts and score V game", () => {
+            const actual = calculateImps(600, 24, 3, 'E-W');
+            const expected = 8;
+            expect(actual).toEqual(expected);
+        });
+        it("should get it right when E-W have 24 pts and get 500", () => {
+            const actual = calculateImps(-500, 16, 3, 'N-S');
+            const expected = -5;
+            expect(actual).toEqual(expected);
+        });
+        it("should get it right when E-W have 24 pts and get 100", () => {
+            const actual = calculateImps(-500, 24, 3, 'E-W');
+            const expected = -13;
             expect(actual).toEqual(expected);
         });
     });

@@ -41,7 +41,7 @@ export function getPureScore(level: number, type: ContractType): number {
     }
 }
 
-function getIsMade(tricksMade: number, level: number): boolean {
+export function getIsMade(tricksMade: number, level: number): boolean {
     return tricksMade - 6 >= level;
 }
 
@@ -111,18 +111,9 @@ export function calculateScore(boardNumber: number, level: number, type: Contrac
         score = score + getBonus(score, level, type, isVulnerabl);
         score = score + getOverTricksBonus((tricksMade - 6 - level), type, isVulnerabl, isDoubled, isRedoubled);
         score = score + (isDoubled ? 50 : 0) + (isRedoubled ? 100 : 0)
-        if (haveI) {
-            return score;
-        } else {
-            return 0 - score;
-        }
+        return score;
     } else {
-        const downScore = getDownScore(isVulnerabl, isDoubled, isRedoubled, getTricksDown(tricksMade, level));
-        if (haveI) {
-            debugger;
-            return 0 - downScore;
-        } else {
-            return downScore;
-        }
+        const downScore = 0 - getDownScore(isVulnerabl, isDoubled, isRedoubled, getTricksDown(tricksMade, level));
+       return downScore
     }
 }

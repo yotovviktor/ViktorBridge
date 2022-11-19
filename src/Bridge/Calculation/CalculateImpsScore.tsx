@@ -2,14 +2,19 @@ import { By, ScoreToImps } from "../../model";
 import { getVulnerability, isVulnerable } from "./CalculateScore";
 
 export function calculateImps(score: number, points: number, boardNumber: number, by: By) {
-    const isVulnerabl = isVulnerable(getVulnerability(boardNumber - 1), by);
-    const obligation = getObligation(points, isVulnerabl)
+    let obligation;
+    if (score < 0 && points < 20) {
+        const enemyBy = by === 'N-S' ? 'E-W' : 'N-S';
+        obligation = 0 - getObligation( 40 - points, isVulnerable(getVulnerability(boardNumber - 1), enemyBy));
+    } else {
+        obligation = getObligation(points, isVulnerable(getVulnerability(boardNumber - 1), by));
+    }
     if (score === obligation) {
         return 0;
     } else if (score > obligation) {
         return getImps(score - obligation);
     } else {
-        return 0 - getImps(obligation - score)
+        return 0 - getImps(obligation - score);
     }
 }
 

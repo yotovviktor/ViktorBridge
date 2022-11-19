@@ -2,10 +2,11 @@ import * as React from 'react';
 import { Entry } from '../model';
 import AddEntry from './AddEntry';
 import { calculateImps } from './Calculation/CalculateImpsScore';
-import { calculateScore } from './Calculation/CalculateScore';
+import { calculateScore, getIsMade } from './Calculation/CalculateScore';
 import { ScoreTable } from './ScoreTable'
 import Grid from '@mui/material/Grid'; // Grid version 1
 import { Container } from '@mui/system';
+import { calculateBoard } from './Calculation/CalculateBoard';
 
 
 function Bridge() {
@@ -13,8 +14,7 @@ function Bridge() {
     const [nextId, setNextId] = React.useState(1);
     const [currentEntry, setCurrentEntry] = React.useState({} as Entry);
     const addEntry = (entry: Entry) => {
-        entry.score = calculateScore(entry.boardNumber, entry.contractLevel, entry.contractType, entry.tricksMade, entry.by, entry.by === 'N-S', entry.isDoubled, entry.isRedoubled);
-        entry.imps = calculateImps(entry.score, entry.points, entry.boardNumber, entry.by);
+        entry = calculateBoard(entry);
 
         let newEntries: Entry[] = [...entries];
         if (!!entry.id) {

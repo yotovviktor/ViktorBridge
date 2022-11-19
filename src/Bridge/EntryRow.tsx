@@ -36,7 +36,7 @@ const EntryRow: React.FC<ScoreTableRowProps> = ({ entry, calculateImpsTotalUpTo,
       <StyledTableCell component="th" scope="row">
         {entry.boardNumber}
       </StyledTableCell>
-      <StyledTableCell align="right">{entry.contractLevel} {getSymbol(entry.contractType)}</StyledTableCell>
+      <StyledTableCell align="right">{entry.contractLevel} {getSymbol(entry.contractType)} {entry.isDoubled ? 'X' : entry.isRedoubled ? 'XX' : ''}</StyledTableCell>
       <StyledTableCell align="right">{entry.by}</StyledTableCell>
       <StyledTableCell align="right">{entry.score}</StyledTableCell>
       <StyledTableCell align="right">{entry.imps}</StyledTableCell>
