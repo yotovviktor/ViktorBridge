@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import { ScoreTableProps } from '../model';
 import EntryRow, { StyledTableCell, StyledTableRow } from './EntryRow';
 import { SxProps } from '@mui/material';
+import { useStoreState } from './Store/Hooks';
 
 const tableContainerSx: SxProps = {
     border: "1px solid rgba(128,128,128,0.4)",
@@ -18,7 +19,10 @@ const tableContainerSx: SxProps = {
     maxHeight: 500
 };
 
-export const ScoreTable: React.FC<ScoreTableProps> = ({ entries, onDelete, onEdit }) => {
+export const ScoreTable: React.FC<ScoreTableProps> = ({ onDelete, onEdit }) => {
+
+    const { entries } = useStoreState((store) => store)
+
     const calculateImpsTotalUpTo = (entryId: number): number =>
         entries.filter(entry => entry.id <= entryId)
             .map(entry => entry.imps)
@@ -37,7 +41,7 @@ export const ScoreTable: React.FC<ScoreTableProps> = ({ entries, onDelete, onEdi
         <TableContainer sx={tableContainerSx}>
             <Table
                 stickyHeader={true}
-                sx={{ maxWidth: '680px', minWidth: '600px'}}>
+                sx={{ maxWidth: '680px', minWidth: '600px' }}>
                 <TableHead>
                     <TableRow>
                         <StyledTableCell>#</StyledTableCell>
@@ -47,17 +51,16 @@ export const ScoreTable: React.FC<ScoreTableProps> = ({ entries, onDelete, onEdi
                         <StyledTableCell align="right">Imps</StyledTableCell>
                         <StyledTableCell align="right">	Imps &Sigma;</StyledTableCell>
                         <StyledTableCell align="right">Score &Sigma;</StyledTableCell>
-                        <StyledTableCell align="right">Points N-S</StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>
-
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {entries.map((entry) => (
+                    {entries?.map((entry) => (
                         <EntryRow
                             key={entry.id}
                             entry={entry}
                             onDeleteClick={onDelete}
+                            onEditClick = {onEdit}
                             calculateImpsTotalUpTo={calculateImpsTotalUpTo}
                             calculateScoreTotalUpTo={calculateScoreTotalUpTo} />))}
                     <StyledTableRow
@@ -65,7 +68,6 @@ export const ScoreTable: React.FC<ScoreTableProps> = ({ entries, onDelete, onEdi
                     >
                         <StyledTableCell component="th" scope="row">
                         </StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>

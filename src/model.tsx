@@ -3,16 +3,16 @@ export type ContractType = 'Clubs' | 'Diamonds' | 'Hearts' | 'Spades' | 'NoTrump
 export type Vulnerability = 'N-S' | 'E-W' | 'Both' | 'None';
 
 export interface ScoreTableProps {
-    entries: Entry[];
     onDelete: (entryId: number) => void;
     onEdit: (entryId: number) => void;
 }
 
 export interface ScoreTableRowProps {
-    entry : Entry;
-    onDeleteClick : (entryId : number) => void;
-    calculateScoreTotalUpTo : (entryId : number) => number;
-    calculateImpsTotalUpTo : (entryId : number) => number;
+    entry: Entry;
+    onDeleteClick: (entryId: number) => void;
+    onEditClick: (entryId: number) => void;
+    calculateScoreTotalUpTo: (entryId: number) => number;
+    calculateImpsTotalUpTo: (entryId: number) => number;
 }
 
 export interface Entry {
@@ -30,7 +30,6 @@ export interface Entry {
 }
 
 export interface AddOrEditEntryProps {
-    entry: Entry;
     addEntryFunction: (entry: Entry) => void;
 }
 

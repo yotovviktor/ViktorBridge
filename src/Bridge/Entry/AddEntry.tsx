@@ -4,10 +4,11 @@ import * as yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, FormGroup, MenuItem, SelectChangeEvent, SxProps, TextField } from "@mui/material";
-import { AddOrEditEntryProps, By, ContractType, Entry } from "../model";
+import { AddOrEditEntryProps, By, ContractType, Entry } from "../../model";
 import { Container } from "@mui/system";
-import { purpuleColor, warningColor } from "../styles";
-import { getSymbol } from "./Helpers/utils";
+import { purpuleColor, warningColor } from "../../styles";
+import { getSymbol } from "../Helpers/utils";
+import { useStoreState } from "../Store/Hooks";
 
 export const validationSchema = yup.object().shape({
     boardNumber: yup.number().integer().required()
@@ -27,12 +28,15 @@ export const validationSchema = yup.object().shape({
         .max(13, 'tricks must be between 0 and 13'),
 });
 
-const AddEntry: React.FC<AddOrEditEntryProps> = ({ entry, addEntryFunction }) => {
+const AddEntry: React.FC<AddOrEditEntryProps> = ({ addEntryFunction }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(validationSchema),
     });
-    const [by, setBy] = useState(entry.by || '')
-    const [type, setType] = useState(entry.contractType || '');
+
+    const { selectedEntry } = useStoreState((state) => state)
+
+    const [by, setBy] = useState(selectedEntry.by || '')
+    const [type, setType] = useState(selectedEntry.contractType || '');
     const [isDoubled, setIsDoubled] = useState(false);
     const [isRedoubled, setIsRedoubled] = useState(false);
     const [level, setLevel] = useState(0)
@@ -108,7 +112,7 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ entry, addEntryFunction }) =>
                             <TextField
                                 sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
                                 error={!!errors['boardNumber']}
-                                type="number" defaultValue={entry.boardNumber || ''}
+                                type="number" defaultValue={selectedEntry.boardNumber || ''}
                                 {...register('boardNumber')}
                                 id="contract-number-input"
                                 label="Board#"
@@ -123,7 +127,7 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ entry, addEntryFunction }) =>
                             <TextField
                                 sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
                                 error={!!errors['contractLevel']}
-                                type="number" defaultValue={entry.contractLevel || ''}
+                                type="number" defaultValue={selectedEntry.contractLevel || ''}
                                 {...register('contractLevel', { onChange: (e) => handleChangelevel(e) })}
                                 label="Level"
                                 variant="filled"
@@ -197,7 +201,7 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ entry, addEntryFunction }) =>
                         <TextField
                             sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
                             error={!!errors['points']}
-                            type="number" defaultValue={entry.boardNumber || ''}
+                            type="number" defaultValue={selectedEntry.boardNumber || ''}
                             {...register('points')}
                             id="points-input"
                             label="Points"

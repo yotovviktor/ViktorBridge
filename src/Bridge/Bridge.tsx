@@ -1,22 +1,19 @@
 import * as React from 'react';
 import { Entry } from '../model';
-import AddEntry from './AddEntry';
-import { calculateImps } from './Calculation/CalculateImpsScore';
-import { calculateScore, getIsMade } from './Calculation/CalculateScore';
 import { ScoreTable } from './ScoreTable'
-import Grid from '@mui/material/Grid'; // Grid version 1
-import { Container } from '@mui/system';
 import { calculateBoard } from './Calculation/CalculateBoard';
+import AddEntry from './Entry/AddEntry';
+import { useStoreActions, useStoreState } from './Store/Hooks';
 
 
 function Bridge() {
-    const [entries, setEntries] = React.useState([] as Entry[])
+    const { entries, selectedEntry } = useStoreState((state) => state)
+    const { setEntries, setSelectedEntity} = useStoreActions((store) => store)
     const [nextId, setNextId] = React.useState(1);
-    const [currentEntry, setCurrentEntry] = React.useState({} as Entry);
     const addEntry = (entry: Entry) => {
         entry = calculateBoard(entry);
 
-        let newEntries: Entry[] = [...entries];
+        let newEntries: Entry[] = Object.assign([], entries);
         if (!!entry.id) {
             newEntries = newEntries.map(inEntry => inEntry.id === entry.id ? entry : inEntry);
         } else {
@@ -24,7 +21,7 @@ function Bridge() {
             setNextId(nextId + 1);
         }
         setEntries(newEntries);
-        setCurrentEntry({} as Entry);
+        setSelectedEntity({} as Entry);
     }
 
     const deleteEntry = (entryId: number) => {
@@ -33,13 +30,13 @@ function Bridge() {
     }
 
     const editEntry = (entryId: number) => {
-        setCurrentEntry(entries.filter(entry => entry.id = entryId)[0]);
+        setSelectedEntity(entries.filter(entry => entry.id = entryId)[0]);
     }
 
     return (
         <>
-            <ScoreTable entries={entries as Entry[]} onDelete={deleteEntry} onEdit={editEntry} />
-            <AddEntry entry={currentEntry} addEntryFunction={addEntry} />
+            <ScoreTable onDelete={deleteEntry} onEdit={editEntry} />
+            <AddEntry addEntryFunction={addEntry} />
         </>
     );
 }

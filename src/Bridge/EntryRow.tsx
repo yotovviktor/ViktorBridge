@@ -3,6 +3,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Button, styled } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { ContractType, Entry, ScoreTableProps, ScoreTableRowProps } from '../model';
 import { purpuleColor } from '../styles';
 import { getSymbol } from './Helpers/utils';
@@ -27,7 +28,7 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const EntryRow: React.FC<ScoreTableRowProps> = ({ entry, calculateImpsTotalUpTo, calculateScoreTotalUpTo, onDeleteClick }) => {
+const EntryRow: React.FC<ScoreTableRowProps> = ({ entry, calculateImpsTotalUpTo, calculateScoreTotalUpTo, onDeleteClick, onEditClick }) => {
   return (
     <StyledTableRow
       key={entry.id}
@@ -36,15 +37,15 @@ const EntryRow: React.FC<ScoreTableRowProps> = ({ entry, calculateImpsTotalUpTo,
       <StyledTableCell component="th" scope="row">
         {entry.boardNumber}
       </StyledTableCell>
-      <StyledTableCell align="right">{entry.contractLevel} {getSymbol(entry.contractType)} {entry.isDoubled ? 'X' : entry.isRedoubled ? 'XX' : ''}</StyledTableCell>
+      <StyledTableCell align="right">
+        {entry.contractLevel} {getSymbol(entry.contractType)} {entry.isDoubled ? 'X' : entry.isRedoubled ? 'XX' : ''}
+        <i style={{ opacity: '0.5', marginLeft: '5px' }}>({entry.points.toString() + ' ' + 'pts'} )</i>
+      </StyledTableCell>
       <StyledTableCell align="right">{entry.by}</StyledTableCell>
       <StyledTableCell align="right">{entry.score}</StyledTableCell>
       <StyledTableCell align="right">{entry.imps}</StyledTableCell>
       <StyledTableCell align="right"> <b>{calculateImpsTotalUpTo(entry.id)}</b></StyledTableCell>
       <StyledTableCell align="right"><b>{calculateScoreTotalUpTo(entry.id)}</b></StyledTableCell>
-      <StyledTableCell align="right">
-        {entry.points}
-      </StyledTableCell>
       <StyledTableCell align="right">
         <Button
           variant="text"
