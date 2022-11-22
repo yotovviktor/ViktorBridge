@@ -15,6 +15,15 @@ export interface ScoreTableRowProps {
     calculateImpsTotalUpTo: (entryId: number) => number;
 }
 
+export interface StatisticsProps {
+    by: By;
+}
+
+export interface PieChartProps {
+    data: (string | number)[][],
+    options: { title: string }
+}
+
 export interface Entry {
     id: number;
     boardNumber: number;

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, FormGroup, MenuItem, SelectChangeEvent, SxProps, TextField } from "@mui/material";
+import { Alert, Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, MenuItem, SelectChangeEvent, Snackbar, SxProps, TextField } from "@mui/material";
 import { AddOrEditEntryProps, By, ContractType, Entry } from "../../model";
 import { Container } from "@mui/system";
 import { purpuleColor, warningColor } from "../../styles";
@@ -29,7 +29,7 @@ export const validationSchema = yup.object().shape({
 });
 
 const AddEntry: React.FC<AddOrEditEntryProps> = ({ addEntryFunction }) => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
         resolver: yupResolver(validationSchema),
     });
 
@@ -41,9 +41,24 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ addEntryFunction }) => {
     const [isRedoubled, setIsRedoubled] = useState(false);
     const [level, setLevel] = useState(0)
     const [tricksMade, setTricksMade] = useState(0);
+    const [open, setOpen] = React.useState(false);
     const handleChangeBy = (event: SelectChangeEvent<string>) => {
         setBy(event.target.value as By);
     }
+
+    const handleClick = () => {
+        if (isValid) {
+            setOpen(true);
+        }
+    };
+
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const handleChangeTricksMade = (event: SelectChangeEvent<string>) => {
         setTricksMade(+event.target.value);
@@ -95,7 +110,7 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ addEntryFunction }) => {
 
     return (
         <Container sx={tableContainerSx}>
-            <Card sx={{ bgcolor: 'rgb(236, 243, 245)', padding: '10px', m: '20px', minWidth: 'auto', maxWidth: 'auto', position: 'center', border: 'thin' }}>
+            <Card sx={{ bgcolor: 'rgb(236, 243, 245)', padding: '10px', m: '20px', minWidth: '100px', maxWidth: '650px', position: 'center', border: 'thin' }}>
                 <CardHeader
                     sx={{ borderBottom: 'thick', borderBottomColor: 'grey' }}
                     avatar={
@@ -230,13 +245,18 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ addEntryFunction }) => {
                     } label="XX" />
                     <CardActions>
                         <Button
+                            onClick={handleClick}
                             type='submit'
                             size="large"
                             sx={{ color: purpuleColor }}
                         >
                             Add
                         </Button>
-
+                        <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                                Entry is added!
+                            </Alert>
+                        </Snackbar>
                         <Button
                             type='button'
                             size="large"

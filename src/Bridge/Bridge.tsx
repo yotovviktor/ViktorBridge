@@ -4,11 +4,14 @@ import { ScoreTable } from './ScoreTable'
 import { calculateBoard } from './Calculation/CalculateBoard';
 import AddEntry from './Entry/AddEntry';
 import { useStoreActions, useStoreState } from './Store/Hooks';
+import { Grid } from '@mui/material';
+import Statistics from './Statistics/Statistics';
+import ScrollDialog from './Statistics/ScrollDialog';
 
 
 function Bridge() {
     const { entries, selectedEntry } = useStoreState((state) => state)
-    const { setEntries, setSelectedEntity} = useStoreActions((store) => store)
+    const { setEntries, setSelectedEntity } = useStoreActions((store) => store)
     const [nextId, setNextId] = React.useState(1);
     const addEntry = (entry: Entry) => {
         entry = calculateBoard(entry);
@@ -36,7 +39,14 @@ function Bridge() {
     return (
         <>
             <ScoreTable onDelete={deleteEntry} onEdit={editEntry} />
-            <AddEntry addEntryFunction={addEntry} />
+            <Grid container columns={12} spacing={1}>
+                <Grid item xs={8}>
+                    <AddEntry addEntryFunction={addEntry} />
+                </Grid>
+                <Grid item xs={3} sx={{ m: 'auto' }}>
+                    {entries?.length ? <ScrollDialog /> : ''}
+                </Grid>
+            </Grid>
         </>
     );
 }

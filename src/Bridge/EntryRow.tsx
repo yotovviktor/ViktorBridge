@@ -3,8 +3,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Button, styled } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import { ContractType, Entry, ScoreTableProps, ScoreTableRowProps } from '../model';
+import { ScoreTableRowProps } from '../model';
 import { purpuleColor } from '../styles';
 import { getSymbol } from './Helpers/utils';
 
