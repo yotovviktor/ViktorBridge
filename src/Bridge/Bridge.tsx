@@ -4,7 +4,7 @@ import { ScoreTable } from './ScoreTable'
 import { calculateBoard } from './Calculation/CalculateBoard';
 import AddEntry from './Entry/AddEntry';
 import { useStoreActions, useStoreState } from './Store/Hooks';
-import { Grid } from '@mui/material';
+import { Box, Container, Grid } from '@mui/material';
 import Statistics from './Statistics/Statistics';
 import ScrollDialog from './Statistics/ScrollDialog';
 
@@ -39,14 +39,12 @@ function Bridge() {
     return (
         <>
             <ScoreTable onDelete={deleteEntry} onEdit={editEntry} />
-            <Grid container columns={12} spacing={1}>
-                <Grid item xs={8}>
-                    <AddEntry addEntryFunction={addEntry} />
-                </Grid>
-                <Grid item xs={3} sx={{ m: 'auto' }}>
+            <Box sx={{ flexGrow: 1 }}>
+                <AddEntry addEntryFunction={addEntry} />
+                <Container style={{ margin: 'auto' }}>
                     {entries?.length ? <ScrollDialog /> : ''}
-                </Grid>
-            </Grid>
+                </Container>
+            </Box>
         </>
     );
 }

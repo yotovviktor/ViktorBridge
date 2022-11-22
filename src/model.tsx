@@ -47,3 +47,21 @@ export interface ScoreToImps {
     upper: number;
     imps: number;
 }
+
+export interface StatisticsData {
+    contractsByCount: number,
+    pointsNSAvv: number,
+    pointsEWAvv: number,
+    gamesBelow24Count: number,
+    gamesBewol24Imps: number,
+    gamesOver25Count: number,
+    gamesOver25Imps: number,
+    slamsCount: number,
+    slamsImps: number,
+    gamesBelow25DownCount: number,
+    gamesBelow25DownImps: number,
+    gamesOver25DownCount: number,
+    gamesOver25DownImps: number,
+    slamsDownCount: number,
+    slamsDownImps: number,
+}

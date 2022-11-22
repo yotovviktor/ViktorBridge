@@ -5,6 +5,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Statistics from './Statistics';
 import { By } from '../../model';
+import { ButtonGroup, Container, DialogActions, SxProps } from '@mui/material';
+
+const containerSx: SxProps = {
+  width: "max-content",
+  marginLeft: "auto",
+  marginRight: "auto",
+  marginTop: 4,
+  borderRadius: 2,
+};
 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
@@ -31,9 +40,11 @@ export default function ScrollDialog() {
   }, [open]);
 
   return (
-    <div>
-      <Button onClick={handleClickOpen('paper', 'N-S')}>Statistics By N-S</Button>
-      <Button onClick={handleClickOpen('paper', 'E-W')}>Statistics By N-S</Button>
+    <>
+      <Container sx={containerSx}>
+        <Button color="secondary" onClick={handleClickOpen('body', 'N-S')}>Statistics By N-S</Button>
+        <Button onClick={handleClickOpen('body', 'E-W')}>Statistics By E-W</Button>
+      </Container>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -43,10 +54,13 @@ export default function ScrollDialog() {
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">Statistics</DialogTitle>
-        <DialogContent dividers={scroll === 'paper'} >
+        <DialogContent dividers={scroll === 'body'} >
           <Statistics by={by} />
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+        </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }

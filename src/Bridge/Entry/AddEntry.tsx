@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Alert, Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, MenuItem, SelectChangeEvent, Snackbar, SxProps, TextField } from "@mui/material";
+import { Alert, Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, MenuItem, SelectChangeEvent, Snackbar, SxProps, TextField, Tooltip } from "@mui/material";
 import { AddOrEditEntryProps, By, ContractType, Entry } from "../../model";
 import { Container } from "@mui/system";
 import { purpuleColor, warningColor } from "../../styles";
@@ -213,19 +213,21 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ addEntryFunction }) => {
                         }
                     </TextField>
                     <FormControl>
-                        <TextField
-                            sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
-                            error={!!errors['points']}
-                            type="number" defaultValue={selectedEntry.boardNumber || ''}
-                            {...register('points')}
-                            id="points-input"
-                            label="Points"
-                            variant="filled"
-                            helperText={!!errors['points'] ? errors['points'].message as string : ''}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
+                        <Tooltip title="Always input N-S points" arrow>
+                            <TextField
+                                sx={{ m: 1, minWidth: '5ch', maxWidth: '10ch' }}
+                                error={!!errors['points']}
+                                type="number" defaultValue={selectedEntry.boardNumber || ''}
+                                {...register('points')}
+                                id="points-input"
+                                label="Points"
+                                variant="filled"
+                                helperText={!!errors['points'] ? errors['points'].message as string : ''}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </Tooltip>
                     </FormControl>
                     <FormControlLabel control={
                         <Checkbox

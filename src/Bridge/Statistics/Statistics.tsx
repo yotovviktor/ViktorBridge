@@ -1,5 +1,6 @@
 import { Divider, Typography } from "@mui/material";
 import { Entry, StatisticsProps } from "../../model";
+import { getStatisticsData } from "../Calculation/StatisticsCalculations";
 import { useStoreState } from "../Store/Hooks";
 import PieChart from "./PieChart";
 
@@ -9,103 +10,67 @@ const marginTopBottom15SX = {
 }
 
 const Statistics: React.FC<StatisticsProps> = (by) => {
-    const getPointsData = () => {
-        const nSPointsAvv = (entries.map(e => e.points).reduce<number>((accumulator, current) => {
-            return accumulator + current;
-        }, 0) / entries.length)
-
-        const eWPointsAvv = 40 - nSPointsAvv;
-
-        const data = [["", "Points"],
-        ["N-S Pts", nSPointsAvv],
-        ["E-W Pts", eWPointsAvv],
-        ];
-        return data;
-    }
-
-    const getBoardsWithSpecificPoints = (lower: number, upper: number) =>
-        entries.filter(e => {
-            if (by.by === "N-S") {
-                if (e.points >= lower && e.points <= upper && e.by === by.by) {
-                    return e;
-                }
-            } else {
-                if ((40 - e.points) >= lower && (40 - e.points) <= upper && e.by === by.by) {
-                    return e;
-                }
-            }
-        });
-
-    const getBoardsWhereSlamWithSpecificPoints = (lower: number, upper: number) =>
-        getBoardsWithSpecificPoints(lower, upper).filter(e => {
-            if (e.contractLevel === 6 && e.tricksMade >= 12) {
-                return e;
-            }
-
-            if (e.contractLevel === 7 && e.tricksMade === 13) {
-                return e;
-            }
-        });
-
-    const getBoardWhereGamesWithSprcificPoints = (lower: number, upper: number) =>
-        getBoardsWithSpecificPoints(lower, upper).filter(e => {
-            if ((e.contractType === 'Hearts' || e.contractType === 'Spades') && e.contractLevel >= 4 && e.contractLevel <= 5 && e.tricksMade >= 10) {
-                return e;
-            }
-            if ((e.contractType === 'Clubs' || e.contractType === 'Diamonds') && e.contractLevel == 5 && e.tricksMade >= 11) {
-                return e;
-            }
-            if (e.contractType === 'NoTrump' && e.contractLevel >= 3 && e.contractLevel <= 5 && e.tricksMade >= 9) {
-                return e;
-            }
-        });
-
-    const getWonImpsFromBoards = (lower: number, upper: number, func: (lower: number, upper: number) => Entry[]) => {
-        const specificEntries = func(lower, upper);
-        const imps = specificEntries.map(e => e.imps).reduce<number>((accumulator, current) => {
-            return accumulator + current;
-        }, 0);
-
-        if (by.by === 'N-S') {
-            return imps;
-        } else {
-            return 0 - imps;
-        }
-    }
-    const getContractsBy = () => {
-        return entries.filter(e => e.by === by.by)?.length;
-    }
     const { entries } = useStoreState((state) => state)
+
+    const data = getStatisticsData(entries, by.by);
+
+    const pieChartData = [
+        ["", "Points"],
+        ["N-S Pts", data.pointsNSAvv],
+        ["E-W Pts", data.pointsEWAvv],
+    ];
+
     return (
         <div style={{ textAlign: 'center' }}>
-            <Typography sx={{ textAlign: 'center' }}>
-                <h5>Points</h5>
+            <Typography fontSize={22} sx={{ textAlign: 'center' }}>
+                Points
             </Typography>
-            <PieChart data={getPointsData()} options={{ title: 'Points distribution' }} />
+            <PieChart data={pieChartData} options={{ title: 'Points distribution' }} />
             <Divider sx={marginTopBottom15SX} />
             <Typography sx={{ m: '10px' }}>
-                You have played {getContractsBy()} games.
-            </Typography>
-            <Divider sx={marginTopBottom15SX} />
-            <Typography sx={{ m: '10px' }}>
-                Game made with less than 25 HCP: {getBoardWhereGamesWithSprcificPoints(1, 24)?.length}.
-            </Typography>
-            <Typography sx={{ m: '10px' }}>
-                You have won {getWonImpsFromBoards(1, 24, getBoardWhereGamesWithSprcificPoints)} imps from them!
+                You have played {data.contractsByCount} games.
             </Typography>
             <Divider sx={marginTopBottom15SX} />
             <Typography sx={{ m: '10px' }}>
-                Games made with more than 25 HCP: {getBoardWhereGamesWithSprcificPoints(25, 40)?.length}
+                Games made with less than 25 HCP: {data.gamesBelow24Count}.
             </Typography>
             <Typography sx={{ m: '10px' }}>
-                You have gained {getWonImpsFromBoards(25, 40, getBoardWhereGamesWithSprcificPoints)} imps from them!
+                You have won {data.gamesBewol24Imps} imps from them!
             </Typography>
             <Divider sx={marginTopBottom15SX} />
             <Typography sx={{ m: '10px' }}>
-                Slams made: {getBoardsWhereSlamWithSpecificPoints(1, 40)?.length}
+                Games <b>not</b> made with less than 25 HCP: {data.gamesBelow25DownCount}.
             </Typography>
             <Typography sx={{ m: '10px' }}>
-                You have gained {getWonImpsFromBoards(1, 40, getBoardsWhereSlamWithSpecificPoints)} imps from them!
+                You have gained {data.gamesBelow25DownImps} imps from them!
+            </Typography>
+            <Divider sx={marginTopBottom15SX} />
+            <Typography sx={{ m: '10px' }}>
+                Games made with more than 25 HCP: {data.gamesOver25Count}
+            </Typography>
+            <Typography sx={{ m: '10px' }}>
+                You have gained {data.gamesOver25Imps} imps from them!
+            </Typography>
+            <Divider sx={marginTopBottom15SX} />
+            <Typography sx={{ m: '10px' }}>
+                Games <b>not</b> made with more than 25 HCP: {data.gamesOver25DownCount}
+            </Typography>
+            <Typography sx={{ m: '10px' }}>
+                You have lost {data.gamesOver25DownImps} imps from them!
+            </Typography>
+            <Divider sx={marginTopBottom15SX} />
+            <Typography sx={{ m: '10px' }}>
+                Slams made: {data.slamsCount}
+            </Typography>
+            <Typography sx={{ m: '10px' }}>
+                You have gained {data.slamsImps} imps from them!
+            </Typography>
+            <Divider sx={marginTopBottom15SX} />
+            <Typography sx={{ m: '10px' }}>
+                Slams <b>not</b> made: {data.slamsDownCount}
+            </Typography>
+            <Typography sx={{ m: '10px' }}>
+                You have lost {data.slamsDownImps} imps from them!
             </Typography>
 
         </div >
