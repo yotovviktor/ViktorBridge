@@ -6,8 +6,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { ScoreTableProps } from '../model';
 import EntryRow, { StyledTableCell, StyledTableRow } from './EntryRow';
-import { SxProps } from '@mui/material';
-import { useStoreState } from './Store/Hooks';
+import { SxProps, useMediaQuery } from '@mui/material';
+import { useStoreState } from '../Store/Hooks';
 
 const tableContainerSx: SxProps = {
     border: "1px solid rgba(128,128,128,0.4)",
@@ -21,7 +21,7 @@ const tableContainerSx: SxProps = {
 
 export const ScoreTable: React.FC<ScoreTableProps> = ({ onDelete, onEdit }) => {
 
-    const { entries } = useStoreState((store) => store)
+    const { entries, windowSize } = useStoreState((store) => store)
 
     const calculateImpsTotalUpTo = (entryId: number): number =>
         entries.filter(entry => entry.id <= entryId)
@@ -36,19 +36,18 @@ export const ScoreTable: React.FC<ScoreTableProps> = ({ onDelete, onEdit }) => {
             .reduce<number>((accumulator, current) => {
                 return accumulator + current;
             }, 0);
-
     return (
         <TableContainer sx={tableContainerSx}>
             <Table
                 stickyHeader={true}
-                sx={{ maxWidth: '680px', minWidth: '600px' }}>
+                sx={{ maxWidth: windowSize.width > 600 ? '680px' : `${windowSize.width}px`, minWidth: windowSize.width > 600 ? '600px' : `${windowSize.width}px`}}>
                 <TableHead>
                     <TableRow>
                         <StyledTableCell>#</StyledTableCell>
                         <StyledTableCell align="right">Contract</StyledTableCell>
                         <StyledTableCell align="right">By</StyledTableCell>
-                        <StyledTableCell align="right">Score</StyledTableCell>
-                        <StyledTableCell align="right">Imps</StyledTableCell>
+                        {windowSize.width > 600 ? <StyledTableCell align="right">Score</StyledTableCell> : ''}
+                        {windowSize.width > 600 ?<StyledTableCell align="right">Imps</StyledTableCell> : ''}
                         <StyledTableCell align="right">	Imps &Sigma;</StyledTableCell>
                         <StyledTableCell align="right">Score &Sigma;</StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>
@@ -70,8 +69,8 @@ export const ScoreTable: React.FC<ScoreTableProps> = ({ onDelete, onEdit }) => {
                         </StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
+                        {windowSize.width > 600 ? <StyledTableCell align="right"></StyledTableCell> : ''}
+                        {windowSize.width > 600 ?<StyledTableCell align="right"></StyledTableCell> : ''}
                         <StyledTableCell align="right"></StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>
                         <StyledTableCell align="right"></StyledTableCell>

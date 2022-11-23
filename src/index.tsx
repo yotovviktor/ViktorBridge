@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from 'easy-peasy'
-import store from './Bridge/Store/store';
+import store from './Store/store';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

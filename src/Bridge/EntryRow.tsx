@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ScoreTableRowProps } from '../model';
 import { purpuleColor } from '../styles';
 import { getSymbol } from './Helpers/utils';
+import { useStoreState } from '../Store/Hooks';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,6 +29,8 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const EntryRow: React.FC<ScoreTableRowProps> = ({ entry, calculateImpsTotalUpTo, calculateScoreTotalUpTo, onDeleteClick, onEditClick }) => {
+  const { windowSize } = useStoreState((store) => store)
+
   return (
     <StyledTableRow
       key={entry.id}
@@ -41,8 +44,8 @@ const EntryRow: React.FC<ScoreTableRowProps> = ({ entry, calculateImpsTotalUpTo,
         <i style={{ opacity: '0.5', marginLeft: '5px' }}>({entry.points.toString() + ' ' + 'pts'} )</i>
       </StyledTableCell>
       <StyledTableCell align="right">{entry.by}</StyledTableCell>
-      <StyledTableCell align="right">{entry.score}</StyledTableCell>
-      <StyledTableCell align="right">{entry.imps}</StyledTableCell>
+      {windowSize.width > 600 ? <StyledTableCell align="right">{entry.score}</StyledTableCell> : ''}
+      {windowSize.width > 600 ? <StyledTableCell align="right">{entry.imps}</StyledTableCell> : ''}
       <StyledTableCell align="right"> <b>{calculateImpsTotalUpTo(entry.id)}</b></StyledTableCell>
       <StyledTableCell align="right"><b>{calculateScoreTotalUpTo(entry.id)}</b></StyledTableCell>
       <StyledTableCell align="right">

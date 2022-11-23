@@ -1,7 +1,7 @@
 import { Divider, Typography } from "@mui/material";
 import { Entry, StatisticsProps } from "../../model";
 import { getStatisticsData } from "../Calculation/StatisticsCalculations";
-import { useStoreState } from "../Store/Hooks";
+import { useStoreState } from "../../Store/Hooks";
 import PieChart from "./PieChart";
 
 const marginTopBottom15SX = {

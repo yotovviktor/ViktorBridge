@@ -3,7 +3,7 @@ import { Entry } from '../model';
 import { ScoreTable } from './ScoreTable'
 import { calculateBoard } from './Calculation/CalculateBoard';
 import AddEntry from './Entry/AddEntry';
-import { useStoreActions, useStoreState } from './Store/Hooks';
+import { useStoreActions, useStoreState } from '../Store/Hooks';
 import { Box, Container, Grid } from '@mui/material';
 import Statistics from './Statistics/Statistics';
 import ScrollDialog from './Statistics/ScrollDialog';

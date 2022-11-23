@@ -8,7 +8,7 @@ import { AddOrEditEntryProps, By, ContractType, Entry } from "../../model";
 import { Container } from "@mui/system";
 import { purpuleColor, warningColor } from "../../styles";
 import { getSymbol } from "../Helpers/utils";
-import { useStoreState } from "../Store/Hooks";
+import { useStoreState } from "../../Store/Hooks";
 
 export const validationSchema = yup.object().shape({
     boardNumber: yup.number().integer().required()
