@@ -4,8 +4,8 @@ import { purpuleColor } from "../styles";
 
 export default function ButtonAppBar() {
     return (
-        <Box >
-            <AppBar position="static" sx={{ bgcolor: purpuleColor }}>
+        <Box sx={{ display: "flex" }} >
+            <AppBar position="fixed" sx={{ bgcolor: purpuleColor, width: `100%`, }}>
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Bridge

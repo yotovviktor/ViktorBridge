@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Alert, Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, MenuItem, SelectChangeEvent, Snackbar, SxProps, TextField, Tooltip } from "@mui/material";
+import { Alert, Avatar, Button, Card, CardActions, CardHeader, Checkbox, FormControl, FormControlLabel, MenuItem, SelectChangeEvent, Snackbar, SxProps, TextField, Tooltip, Typography, Divider } from "@mui/material";
 import { AddOrEditEntryProps, By, ContractType, Entry } from "../../model";
 import { Container } from "@mui/system";
 import { purpuleColor, warningColor } from "../../styles";
@@ -112,15 +112,15 @@ const AddEntry: React.FC<AddOrEditEntryProps> = ({ addEntryFunction }) => {
         <Container sx={tableContainerSx}>
             <Card sx={{ bgcolor: 'rgb(236, 243, 245)', padding: '10px', m: '20px', minWidth: '100px', maxWidth: '650px', position: 'center', border: 'thin' }}>
                 <CardHeader
-                    sx={{ borderBottom: 'thick', borderBottomColor: 'grey' }}
+                    sx={{ borderBottom: 'thick', borderBottomColor: 'grey', textAlign: 'center' }}
                     avatar={
                         <Avatar sx={{ bgcolor: purpuleColor }} aria-label="recipe">
                             <AddIcon />
                         </Avatar>
                     }
-                    title="Add Entry"
+                    title={<Typography> Add Entry</Typography>}
                 />
-
+                <Divider sx={{ marginBottom: '10px' }} />
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                     <div>
                         <FormControl>

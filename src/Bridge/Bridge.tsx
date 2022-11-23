@@ -7,6 +7,7 @@ import { useStoreActions, useStoreState } from './Store/Hooks';
 import { Box, Container, Grid } from '@mui/material';
 import Statistics from './Statistics/Statistics';
 import ScrollDialog from './Statistics/ScrollDialog';
+import NoEntries from './NoEntries';
 
 
 function Bridge() {
@@ -38,7 +39,7 @@ function Bridge() {
 
     return (
         <>
-            <ScoreTable onDelete={deleteEntry} onEdit={editEntry} />
+            {entries?.length ? <ScoreTable onDelete={deleteEntry} onEdit={editEntry} /> : <NoEntries/>}
             <Box sx={{ flexGrow: 1 }}>
                 <AddEntry addEntryFunction={addEntry} />
                 <Container style={{ margin: 'auto' }}>

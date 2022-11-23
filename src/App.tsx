@@ -7,7 +7,9 @@ function App() {
   return (
     <>
       <Nav />
-      <Bridge />
+      <div style={{ marginTop: 80 }}>
+        <Bridge />
+      </div>
     </>
   );
 }
