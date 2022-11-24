@@ -13,6 +13,16 @@ export interface ScoreTableRowProps {
     onEditClick: (entryId: number) => void;
     calculateScoreTotalUpTo: (entryId: number) => number;
     calculateImpsTotalUpTo: (entryId: number) => number;
+    onClickRow : (entry : Entry) => void;
+
+}
+
+export interface EntryDetailsDialogProps {
+    entry: Entry;
+    calculateScoreTotalUpTo: (entryId: number) => number;
+    calculateImpsTotalUpTo: (entryId: number) => number;
+    onDeleteClick: (entryId: number) => void;
+    close: () => void;
 }
 
 export interface StatisticsProps {

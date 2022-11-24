@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Entry } from '../model';
-import { ScoreTable } from './ScoreTable'
+import { ScoreTable } from './ShowScores/ScoreTable'
 import { calculateBoard } from './Calculation/CalculateBoard';
 import AddEntry from './Entry/AddEntry';
 import { useStoreActions, useStoreState } from '../Store/Hooks';
 import { Box, Container, Grid } from '@mui/material';
 import Statistics from './Statistics/Statistics';
 import ScrollDialog from './Statistics/ScrollDialog';
-import NoEntries from './NoEntries';
+import NoEntries from './ShowScores/NoEntries';
 
 
 function Bridge() {
